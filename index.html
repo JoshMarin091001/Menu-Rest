@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Lumière — Menú</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --cream: #FAF7F2;
+      --warm-white: #FFFEF9;
+      --charcoal: #1C1C1A;
+      --gold: #C9A84C;
+      --gold-light: #E8D5A3;
+      --muted: #7A7670;
+      --border: #E8E2D9;
+      --card-bg: #FFFFFF;
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      background-color: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ─── Header ─── */
+    .hero {
+      background: var(--charcoal);
+      padding: 48px 24px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 0%, rgba(201,168,76,.18) 0%, transparent 65%);
+    }
+    .hero-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 52px;
+      font-weight: 600;
+      color: var(--warm-white);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .hero-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,.45);
+      margin-top: 10px;
+      font-weight: 300;
+    }
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 18px 0 0;
+    }
+
+    /* ─── Tabs ─── */
+    .tabs-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--charcoal);
+      padding: 0 16px 16px;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex-shrink: 0;
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: transparent;
+      color: rgba(255,255,255,.55);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      letter-spacing: .3px;
+      cursor: pointer;
+      transition: all .25s ease;
+      white-space: nowrap;
+    }
+    .tab-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--charcoal);
+      font-weight: 600;
+    }
+    .tab-btn:not(.active):active {
+      background: rgba(255,255,255,.08);
+    }
+
+    /* ─── Section label ─── */
+    .section-label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      padding: 28px 20px 12px;
+      font-weight: 500;
+    }
+
+    /* ─── Cards ─── */
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding: 0 16px 32px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      display: flex;
+      align-items: stretch;
+      min-height: 120px;
+      transition: transform .2s ease, box-shadow .2s ease;
+      animation: slideUp .4s ease both;
+    }
+    .card:active { transform: scale(.98); }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-img-wrap {
+      width: 110px;
+      flex-shrink: 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: var(--gold);
+      color: var(--charcoal);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 7px;
+      border-radius: 100px;
+    }
+
+    .card-body {
+      padding: 16px 16px 16px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--charcoal);
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 300;
+    }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+    .card-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+    .card-price span {
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      color: var(--muted);
+    }
+    .card-add {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s;
+      color: var(--charcoal);
+      font-size: 18px;
+      line-height: 1;
+    }
+    .card-add:active { background: var(--gold); border-color: var(--gold); color: #fff; }
+
+    /* ─── Featured (large card) ─── */
+    .card-featured {
+      flex-direction: column;
+      min-height: unset;
+    }
+    .card-featured .card-img-wrap {
+      width: 100%;
+      height: 180px;
+    }
+    .card-featured .card-body {
+      padding: 18px;
+    }
+
+    /* ─── Empty state ─── */
+    .empty {
+      text-align: center;
+      padding: 60px 20px;
+      color: var(--muted);
+    }
+    .empty-icon { font-size: 36px; margin-bottom: 12px; }
+    .empty-txt { font-family: 'Cormorant Garamond', serif; font-size: 22px; }
+
+    /* ─── Footer ─── */
+    footer {
+      background: var(--charcoal);
+      color: rgba(255,255,255,.35);
+      text-align: center;
+      font-size: 11px;
+      padding: 24px 16px;
+      letter-spacing: 1px;
+    }
+    footer strong { color: var(--gold); font-weight: 500; }
+
+    /* stagger animation per card */
+    .card:nth-child(1) { animation-delay: .05s; }
+    .card:nth-child(2) { animation-delay: .10s; }
+    .card:nth-child(3) { animation-delay: .15s; }
+    .card:nth-child(4) { animation-delay: .20s; }
+    .card:nth-child(5) { animation-delay: .25s; }
+    .card:nth-child(6) { animation-delay: .30s; }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="hero">
+    <p class="hero-label">Menú Digital</p>
+    <h1 class="hero-title">Lumière</h1>
+    <p class="hero-sub">Cocina de autor · Guanajuato</p>
+    <div class="hero-divider"></div>
+  </header>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <div class="tabs" id="tabs">
+      <button class="tab-btn active" data-cat="all">Todo</button>
+      <button class="tab-btn" data-cat="entradas">Entradas</button>
+      <button class="tab-btn" data-cat="principales">Platos Fuertes</button>
+      <button class="tab-btn" data-cat="bebidas">Bebidas</button>
+      <button class="tab-btn" data-cat="postres">Postres</button>
+    </div>
+  </div>
+
+  <!-- MENU CONTENT -->
+  <main id="menu-root"></main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <strong>Lumière</strong> · Todos los precios incluyen IVA</p>
+    <p style="margin-top:6px">Informe a su mesero sobre alergias alimentarias</p>
+  </footer>
+
+<script>
+const menu = [
+  /* ── ENTRADAS ── */
+  {
+    cat: "entradas",
+    featured: false,
+    badge: null,
+    name: "Bruschetta de Jitomate",
+    desc: "Pan artesanal tostado, jitomate heirloom, albahaca fresca y aceite de oliva extra virgen",
+    price: 89,
+    img: "https://images.unsplash.com/photo-1572695157366-5e585ab2b69f?w=400&q=80"
+  },
+  {
+    cat: "entradas",
+    featured: false,
+    badge: "Chef's pick",
+    name: "Carpaccio de Res",
+    desc: "Filete en láminas finas, alcaparras, rúcula, parmesano y reducción de balsámico",
+    price: 149,
+    img: "https://images.unsplash.com/photo-1608855238293-a8853e7f7c98?w=400&q=80"
+  },
+  {
+    cat: "entradas",
+    featured: false,
+    badge: null,
+    name: "Sopa de Elote",
+    desc: "Crema suave de elote asado, epazote, chile pasilla y crema ácida de rancho",
+    price: 99,
+    img: "https://images.unsplash.com/photo-1547592166-23ac45744acd?w=400&q=80"
+  },
+  {
+    cat: "entradas",
+    featured: false,
+    badge: "Vegano",
+    name: "Hummus de Betabel",
+    desc: "Garbanzo, betabel rostizado, tahini, limón y chips de pita recién horneados",
+    price: 115,
+    img: "https://images.unsplash.com/photo-1679498349875-9c56c9f8e0e2?w=400&q=80"
+  },
+
+  /* ── PRINCIPALES ── */
+  {
+    cat: "principales",
+    featured: true,
+    badge: "Estrella",
+    name: "Filete Lumière",
+    desc: "Corte prime 300g, mantequilla de trufa negra, papas fondant y espárragos salteados",
+    price: 395,
+    img: "https://images.unsplash.com/photo-1558030006-450675393462?w=700&q=80"
+  },
+  {
+    cat: "principales",
+    featured: false,
+    badge: null,
+    name: "Pasta al Limón",
+    desc: "Linguine artesanal, limón amarillo, alcaparras fritas, ajo negro y pecorino",
+    price: 189,
+    img: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?w=400&q=80"
+  },
+  {
+    cat: "principales",
+    featured: false,
+    badge: "Nuevo",
+    name: "Salmón Miso",
+    desc: "Salmón atlántico glaseado, puré de edamame, jengibre encurtido y sésamo negro",
+    price: 265,
+    img: "https://images.unsplash.com/photo-1485704686097-ed47f7263ca4?w=400&q=80"
+  },
+  {
+    cat: "principales",
+    featured: false,
+    badge: null,
+    name: "Risotto de Hongos",
+    desc: "Arroz carnaroli, mezcla de hongos silvestres, parmesano añejo y aceite de trufa",
+    price: 210,
+    img: "https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=400&q=80"
+  },
+
+  /* ── BEBIDAS ── */
+  {
+    cat: "bebidas",
+    featured: false,
+    badge: null,
+    name: "Agua de Temporada",
+    desc: "Jamaica, horchata o tamarindo · preparación diaria del chef",
+    price: 55,
+    img: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=400&q=80"
+  },
+  {
+    cat: "bebidas",
+    featured: false,
+    badge: "Sin alcohol",
+    name: "Mocktail de Pepino",
+    desc: "Pepino, limón real, menta, jengibre y agua mineral Peñafiel",
+    price: 79,
+    img: "https://images.unsplash.com/photo-1499638673689-79a0b5115d87?w=400&q=80"
+  },
+  {
+    cat: "bebidas",
+    featured: true,
+    badge: "Firma",
+    name: "Cóctel Lumière",
+    desc: "Mezcal joven, maracuyá, chile serrano, sal de gusano y espuma de cítricos",
+    price: 145,
+    img: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=700&q=80"
+  },
+  {
+    cat: "bebidas",
+    featured: false,
+    badge: null,
+    name: "Café de Olla",
+    desc: "Café de altura de Veracruz, piloncillo y canela · servicio en olla de barro",
+    price: 65,
+    img: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=400&q=80"
+  },
+
+  /* ── POSTRES ── */
+  {
+    cat: "postres",
+    featured: true,
+    badge: "Imperdible",
+    name: "Tarta de Chocolate",
+    desc: "Chocolate 72% Oaxaca, ganache de café, flor de sal y helado de vainilla de Papantla",
+    price: 135,
+    img: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80"
+  },
+  {
+    cat: "postres",
+    featured: false,
+    badge: null,
+    name: "Mousse de Maracuyá",
+    desc: "Mousse ligero, coulis tropical, merengue tostado y crocante de coco",
+    price: 115,
+    img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&q=80"
+  },
+  {
+    cat: "postres",
+    featured: false,
+    badge: "Vegano",
+    name: "Sorbete de Mango",
+    desc: "Mango Ataulfo de temporada, hierba santa, granola casera y flores comestibles",
+    price: 95,
+    img: "https://images.unsplash.com/photo-1567206563114-c179706e0b43?w=400&q=80"
+  },
+];
+
+// ─── Render ───────────────────────────────────────────────────────────────
+function buildCard(item) {
+  const priceStr = `$${item.price.toLocaleString('es-MX')} <span>MXN</span>`;
+  const badge = item.badge ? `<div class="card-badge">${item.badge}</div>` : '';
+
+  if (item.featured) {
+    return `
+      <div class="card card-featured">
+        <div class="card-img-wrap">
+          <img src="${item.img}" alt="${item.name}" loading="lazy" />
+          ${badge}
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="card-name">${item.name}</div>
+            <div class="card-desc">${item.desc}</div>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">${priceStr}</div>
+            <button class="card-add" aria-label="Agregar">+</button>
+          </div>
+        </div>
+      </div>`;
+  }
+
+  return `
+    <div class="card">
+      <div class="card-img-wrap">
+        <img src="${item.img}" alt="${item.name}" loading="lazy" />
+        ${badge}
+      </div>
+      <div class="card-body">
+        <div>
+          <div class="card-name">${item.name}</div>
+          <div class="card-desc">${item.desc}</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">${priceStr}</div>
+          <button class="card-add" aria-label="Agregar">+</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+const catLabels = {
+  entradas: "Entradas",
+  principales: "Platos Fuertes",
+  bebidas: "Bebidas",
+  postres: "Postres",
+};
+
+function render(cat) {
+  const root = document.getElementById('menu-root');
+  const filtered = cat === 'all' ? menu : menu.filter(i => i.cat === cat);
+
+  if (!filtered.length) {
+    root.innerHTML = `<div class="empty"><div class="empty-icon">🍽️</div><p class="empty-txt">Sin platos en esta categoría</p></div>`;
+    return;
+  }
+
+  if (cat === 'all') {
+    // group by category
+    let html = '';
+    const cats = ['entradas', 'principales', 'bebidas', 'postres'];
+    cats.forEach(c => {
+      const items = menu.filter(i => i.cat === c);
+      if (!items.length) return;
+      html += `<p class="section-label">${catLabels[c]}</p>`;
+      html += `<div class="cards-list">${items.map(buildCard).join('')}</div>`;
+    });
+    root.innerHTML = html;
+  } else {
+    root.innerHTML = `
+      <p class="section-label">${catLabels[cat]}</p>
+      <div class="cards-list">${filtered.map(buildCard).join('')}</div>`;
+  }
+}
+
+// ─── Tabs ────────────────────────────────────────────────────────────────
+let current = 'all';
+document.getElementById('tabs').addEventListener('click', e => {
+  const btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  current = btn.dataset.cat;
+  render(current);
+});
+
+// init
+render('all');
+</script>
+</body>
+</html>
